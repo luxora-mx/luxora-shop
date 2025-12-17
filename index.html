@@ -1,62 +1,157 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxora Shop | Perfumería Premium</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxora Shop - Exclusividad y Estilo</title>
 
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #111;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+ <style>
+  :root {
+    --bg-dark: #0f0f0f;
+    --bg-card: #161616;
+    --gold: #d4af37;
+    --text-main: #f5f5f5;
+    --text-muted: #b3b3b3;
+  }
 
-        header {
-            background: #000;
-            padding: 25px 0;
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        .container {
-            padding: 40px 20px;
-        }
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+  }
 
-        .card {
-            background: #181818;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 15px;
-            max-width: 480px;
-            box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.05);
-        }
+  header {
+    padding: 30px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+  }
 
-        .card img {
-            width: 100%;
-            border-radius: 12px;
-        }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
 
-        h2 {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: 600;
-        }
+  header p {
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
 
-        p {
-            font-size: 17px;
-            color: #ccc;
-            line-height: 1.5;
-        }
-    </style>
+  .banner {
+    background: linear-gradient(135deg, #111, #1c1c1c);
+    padding: 18px;
+    text-align: center;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border-radius: 14px;
+    padding: 18px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+
+  .card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .card span {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  footer {
+    border-top: 1px solid #222;
+    padding: 25px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>
 </head>
 
 <body>
+<header>
+  <h1>Luxora Shop</h1>
+  <p>Perfumería premium · 100% originales</p>
+</header>
 
+<div class="banner">
+  🚚 Envíos gratis a todo México · Entrega hasta la puerta de tu casa
+</div>
+
+<main class="container">
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://i.imgur.com/8Q1ZKJr.png" alt="Dior Sauvage">
+      <h3>Dior Sauvage 100 ml</h3>
+      <span>1500</span>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/2wQZQG4.png" alt="Bleu de Chanel">
+      <h3>Bleu de Chanel 100 ml</h3>
+      <span>1650</span>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/N0pBf0K.png" alt="Versace Eros">
+      <h3>Versace Eros 200 ml</h3>
+      <span>659</span>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  © 2025 Luxora Shop · Envíos gratis a todo México
+</footer>
 <header>
     Luxora Shop
 </header>
