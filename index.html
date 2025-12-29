@@ -2,99 +2,91 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Luxora Shop | Perfumes Premium</title>
+  <title>Luxora Shop | Perfumes Originales</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Stripe -->
-  <script src="https://js.stripe.com/v3/"></script>
-
-  <!-- Estilos -->
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #0e0e0e;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #0f0f0f;
       color: #fff;
     }
 
     header {
       background: #000;
       padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     header img {
-      max-width: 160px;
+      height: 50px;
+    }
+
+    .cart {
+      font-size: 16px;
+      cursor: pointer;
     }
 
     .banner {
-      background: linear-gradient(90deg, #111, #1a1a1a);
-      padding: 15px;
       text-align: center;
-      font-weight: bold;
-      color: #d4af37;
+      padding: 20px;
+      background: #111;
+      font-size: 14px;
     }
 
-    .section-title {
-      text-align: center;
-      margin: 40px 0 20px;
-      font-size: 26px;
-      letter-spacing: 1px;
-    }
-
-    .grid {
+    .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      padding: 0 20px 40px;
+      padding: 20px;
     }
 
-    .card {
-      background: #141414;
-      border-radius: 12px;
+    .product {
+      background: #181818;
+      border-radius: 10px;
       padding: 15px;
       text-align: center;
-      transition: transform .2s;
     }
 
-    .card:hover {
-      transform: scale(1.03);
+    .product img {
+      width: 100%;
+      border-radius: 8px;
     }
 
-    .card img {
-      max-width: 100%;
-      height: 220px;
-      object-fit: contain;
-    }
-
-    .name {
+    .product h3 {
+      font-size: 16px;
       margin: 10px 0 5px;
-      font-size: 15px;
-      min-height: 40px;
     }
 
     .price {
-      font-size: 18px;
-      color: #d4af37;
+      font-size: 15px;
+      color: #c9a24d;
       margin-bottom: 10px;
     }
 
-    button {
-      background: #d4af37;
+    .product button {
+      background: linear-gradient(135deg, #c9a24d, #f5d27a);
       border: none;
-      padding: 10px 15px;
-      border-radius: 25px;
+      padding: 10px;
+      width: 100%;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
     }
 
+    .product button:hover {
+      opacity: 0.9;
+    }
+
     footer {
-      background: #000;
-      padding: 20px;
       text-align: center;
-      font-size: 14px;
-      color: #aaa;
+      padding: 20px;
+      font-size: 13px;
+      background: #000;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -102,90 +94,80 @@
 <body>
 
 <header>
-  <img src="assets/images/logo.png" alt="Luxora Shop">
+  <img src="assets/assets/images/50862767-59F4-4B12-8424-D7320C27A5E3.png" alt="Luxora Shop">
+  <div class="cart">🛒 Carrito (<span id="cart-count">0</span>)</div>
 </header>
 
 <div class="banner">
-  🚚 ENVÍOS GRATIS A TODO MÉXICO · ENTREGA 1–5 DÍAS HÁBILES · HASTA TU PUERTA
+  🚚 Envío GRATIS a todo México · ⏱️ Entrega 1–5 días hábiles · 💳 Pago seguro
 </div>
 
-<!-- CABALLEROS -->
-<h2 class="section-title">Perfumes para Caballero</h2>
-<div class="grid">
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/61V6d1z2sPL._AC_SL1500_.jpg">
-    <div class="name">Dior Sauvage 100 ml</div>
-    <div class="price">$1500</div>
-    <button onclick="pagar('price_1SbDljFHlvSqX8MZWVQaLDmt')">Comprar ahora</button>
-  </div>
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/71wZl4dJ9XL._AC_SL1500_.jpg">
-    <div class="name">Bleu de Chanel 100 ml</div>
-    <div class="price">$1650</div>
-    <button onclick="pagar('price_1SbDoFFHlvSqX8MZ63fuyT7Y')">Comprar ahora</button>
-  </div>
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/61P0cZ6-2PL._AC_SL1500_.jpg">
-    <div class="name">1 Million 100 ml</div>
-    <div class="price">$1600</div>
-    <button onclick="pagar('price_1SbDrhFHlvSqX8MZOHIS2Bls')">Comprar ahora</button>
-  </div>
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/61ZcZp5rGIL._AC_SL1500_.jpg">
-    <div class="name">Versace Eros 200 ml</div>
-    <div class="price">$659</div>
-    <button onclick="pagar('price_1SbDtiFHlvSqX8MZ84TQHbDR')">Comprar ahora</button>
-  </div>
-
-</div>
-
-<!-- DAMAS -->
-<h2 class="section-title">Perfumes para Dama</h2>
-<div class="grid">
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/61mJt2e9lYL._AC_SL1500_.jpg">
-    <div class="name">Good Girl 80 ml</div>
-    <div class="price">$619</div>
-    <button onclick="pagar('price_1SbsowFHlvSqX8MZW8e6QaIF')">Comprar ahora</button>
-  </div>
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/61cT4zTzcbL._AC_SL1500_.jpg">
-    <div class="name">La Vie Est Belle 100 ml</div>
-    <div class="price">$3859</div>
-    <button onclick="pagar('price_1SbsrfFHlvSqX8MZtAeNcVX1')">Comprar ahora</button>
-  </div>
-
-  <div class="card">
-    <img src="https://m.media-amazon.com/images/I/61u1M4gR1QL._AC_SL1500_.jpg">
-    <div class="name">Black Opium 90 ml</div>
-    <div class="price">$659</div>
-    <button onclick="pagar('price_1SbwRIFHlvSqX8MZCydGIx3C')">Comprar ahora</button>
-  </div>
-
-</div>
+<div class="products" id="products"></div>
 
 <footer>
-  © 2025 Luxora Shop · Pagos seguros con Stripe<br>
-  Contacto: contactoluxurashop@gmail.com
+  © 2025 Luxora Shop · Contacto: Contactoluxurashop@gmail.com
 </footer>
 
 <script>
-  const stripe = Stripe('TU_PUBLIC_KEY_AQUI');
+const products = [
+  ["Dior Sauvage","IMG_8733.jpeg"],
+  ["Bleu de Chanel","IMG_8734.jpeg"],
+  ["Acqua di Gio Profumo","IMG_8735.jpeg"],
+  ["1 Million","IMG_8736.jpeg"],
+  ["Invictus Parfum","IMG_8737.jpeg"],
+  ["Ultra Male","IMG_8738.jpeg"],
+  ["The Most Wanted","IMG_8739.jpeg"],
+  ["Versace Eros","IMG_8741.jpeg"],
+  ["Bad Boy Cobalt","IMG_8742.jpeg"],
+  ["Boss Bottled Infinite","IMG_8744.jpeg"],
+  ["Y EDP","IMG_8745.jpeg"],
+  ["Stronger With You","IMG_8746.jpeg"],
+  ["Montblanc Explorer","IMG_8747.jpeg"],
+  ["Club de Nuit Intense","IMG_8748.jpeg"],
+  ["Born in Roma","IMG_8749.jpeg"],
+  ["Scandal Pour Homme","IMG_8750.jpeg"],
+  ["Lonkoom 24K Golden","IMG_8751.jpeg"],
+  ["Lattafa Yara","IMG_8752.jpeg"],
+  ["Lonkoom Fiery Charm","IMG_8753.jpeg"],
+  ["The Only One","IMG_8754.jpeg"],
+  ["Bright Crystal","IMG_8755.jpeg"],
+  ["Idôle","IMG_8756.jpeg"],
+  ["Eros Pour Femme","IMG_8757.jpeg"],
+  ["Angel Mugler","IMG_8758.jpeg"],
+  ["Coco Mademoiselle","IMG_8759.jpeg"],
+  ["212 VIP","IMG_8760.jpeg"],
+  ["Libre YSL","IMG_8761.jpeg"],
+  ["Sweet Like Candy","IMG_8762.jpeg"],
+  ["Cloud Ariana Grande","IMG_8763.jpeg"],
+  ["Light Blue","IMG_8764.jpeg"],
+  ["Black Opium","IMG_8765.jpeg"],
+  ["Miss Dior","IMG_8766.jpeg"],
+  ["La Vie Est Belle","IMG_8767.jpeg"],
+  ["Good Girl","IMG_8768.jpeg"],
+  ["Nautica Voyage","IMG_8769.jpeg"],
+  ["CK One","IMG_8770.jpeg"]
+];
 
-  function pagar(priceId) {
-    stripe.redirectToCheckout({
-      lineItems: [{ price: priceId, quantity: 1 }],
-      mode: 'payment',
-      successUrl: window.location.origin + '/success.html',
-      cancelUrl: window.location.origin + '/cancel.html',
-    });
-  }
+let cartCount = 0;
+const container = document.getElementById("products");
+
+products.forEach(p => {
+  const div = document.createElement("div");
+  div.className = "product";
+  div.innerHTML = `
+    <img src="assets/assets/images/${p[1]}" alt="${p[0]}">
+    <h3>${p[0]}</h3>
+    <div class="price">$899 MXN · Envío GRATIS</div>
+    <button onclick="addToCart()">Comprar ahora</button>
+  `;
+  container.appendChild(div);
+});
+
+function addToCart() {
+  cartCount++;
+  document.getElementById("cart-count").innerText = cartCount;
+  alert("Producto agregado al carrito");
+}
 </script>
 
 </body>
