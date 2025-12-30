@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxora Shop</title>
+
+<style>
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto}
+body{margin:0;background:#f5f5f5;color:#111}
+
+header{
+display:flex;align-items:center;justify-content:space-between;
+padding:14px 18px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08)
+}
+header img{height:42px}
+header h1{font-size:18px;margin:0 10px;flex:1}
+
+.header-icons{display:flex;gap:10px}
+.icon-btn{
+width:40px;height:40px;border-radius:50%;
+background:#f2f2f2;display:flex;align-items:center;justify-content:center;
+box-shadow:0 2px 6px rgba(0,0,0,.15);cursor:pointer
+}
+
+.banner{
+margin:16px;background:linear-gradient(135deg,#0f2d2e,#1e4b4f);
+color:#fff;border-radius:16px;padding:24px;text-align:center;
+height:75%
+}
+.banner h2{margin:0 0 10px;font-size:22px}
+.banner p{margin:0 0 14px;font-size:14px;opacity:.9}
+.banner button{
+background:#fff;color:#0f2d2e;border:none;padding:12px 18px;
+border-radius:22px;font-weight:600;cursor:pointer
+}
+
+.filters{display:flex;justify-content:center;gap:12px;margin:20px}
+.filters button{
+padding:10px 18px;border-radius:22px;border:none;
+background:#111;color:#fff;cursor:pointer
+}
+
+.products{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:16px;padding:16px
+}
+.card{
+background:#fff;border-radius:16px;padding:12px;
+box-shadow:0 4px 12px rgba(0,0,0,.1)
+}
+.card img{width:100%;border-radius:12px}
+.card h3{font-size:14px;margin:8px 0 4px}
+.card select,.card button{
+width:100%;padding:8px;border-radius:10px;margin-top:6px
+}
+.card button{
+background:#111;color:#fff;border:none;font-weight:600
+}
+.price{font-weight:700;margin-top:6px}
+</style>
+</head>
+
+<body>
+
+<header>
+<img src="assets/assets/images/50862767-59F4-4B12-8424-D7320C27A5E3.png">
+<h1>Luxora Shop</h1>
+<div class="header-icons">
+<div class="icon-btn">🛒</div>
+<div class="icon-btn">👤</div>
+</div>
+</header>
+
+<div class="banner">
+<h2>¿No sabes qué perfume elegir?</h2>
+<p>Encuentra tu perfume ideal según tu estilo</p>
+<button>Descubrir mi perfume ideal</button>
+</div>
+
+<div class="filters">
+<button onclick="filter('all')">Todos</button>
+<button onclick="filter('men')">Caballero</button>
+<button onclick="filter('women')">Dama</button>
+</div>
+
+<div class="products" id="products"></div>
+
+<script>
+const perfumes = [
+{cat:'men',name:'Dior Sauvage',img:'assets/assets/images/IMG_8733.jpeg',v:[['100 ml','$1500']]},
+{cat:'men',name:'Bleu de Chanel',img:'assets/assets/images/IMG_8734.jpeg',v:[['100 ml','$1650']]},
+{cat:'men',name:'Acqua di Gio Profumo',img:'assets/assets/images/IMG_8735.jpeg',v:[['100 ml','$600']]},
+{cat:'men',name:'1 Million',img:'assets/assets/images/IMG_8736.jpeg',v:[['100 ml','$1600']]},
+{cat:'men',name:'Invictus Parfum',img:'assets/assets/images/IMG_8737.jpeg',v:[['200 ml','$2860']]},
+{cat:'men',name:'Ultra Male Intense',img:'assets/assets/images/IMG_8738.jpeg',v:[['125 ml','$900']]},
+{cat:'men',name:'Azzaro The Most Wanted',img:'assets/assets/images/IMG_8739.jpeg',v:[['100 ml','$1199']]},
+{cat:'men',name:'Versace Eros',img:'assets/assets/images/IMG_8741.jpeg',v:[['200 ml','$659']]},
+{cat:'men',name:'Bad Boy Cobalt',img:'assets/assets/images/IMG_8742.jpeg',v:[['100 ml','$1559']]},
+{cat:'men',name:'Boss Bottled Infinite',img:'assets/assets/images/IMG_8744.jpeg',v:[['100 ml','$1259'],['200 ml','$1359']]},
+{cat:'men',name:'Y EDP',img:'assets/assets/images/IMG_8745.jpeg',v:[['100 ml','$859'],['200 ml','$1600']]},
+{cat:'men',name:'Stronger With You',img:'assets/assets/images/IMG_8746.jpeg',v:[['100 ml','$2689']]},
+{cat:'men',name:'Montblanc Explorer',img:'assets/assets/images/IMG_8747.jpeg',v:[['100 ml','$1059']]},
+{cat:'men',name:'Club de Nuit Intense',img:'assets/assets/images/IMG_8748.jpeg',v:[['EDP','$1159']]},
+{cat:'men',name:'Scandal Pour Homme',img:'assets/assets/images/IMG_8750.jpeg',v:[['100 ml','$1359']]},
+{cat:'men',name:'CK One',img:'assets/assets/images/IMG_8770.jpeg',v:[['100 ml','$459'],['200 ml','$659']]},
+{cat:'men',name:'Nautica Voyage',img:'assets/assets/images/IMG_8769.jpeg',v:[['100 ml','$359'],['200 ml','$659']]},
+
+{cat:'women',name:'Good Girl',img:'assets/assets/images/IMG_8768.jpeg',v:[['80 ml','$619'],['150 ml','$2659']]},
+{cat:'women',name:'La Vie Est Belle',img:'assets/assets/images/IMG_8767.jpeg',v:[['30 ml','$2059'],['50 ml','$2859'],['100 ml','$3859'],['150 ml','$4459']]},
+{cat:'women',name:'Miss Dior',img:'assets/assets/images/IMG_8766.jpeg',v:[['100 ml','$1599'],['150 ml','$3619']]},
+{cat:'women',name:'Black Opium',img:'assets/assets/images/IMG_8765.jpeg',v:[['90 ml','$659']]},
+{cat:'women',name:'Light Blue',img:'assets/assets/images/IMG_8764.jpeg',v:[['125 ml','$1399']]},
+{cat:'women',name:'Cloud Ariana Grande',img:'assets/assets/images/IMG_8763.jpeg',v:[['100 ml','$1189']]},
+{cat:'women',name:'Sweet Like Candy',img:'assets/assets/images/IMG_8762.jpeg',v:[['100 ml','$899']]},
+{cat:'women',name:'Libre YSL',img:'assets/assets/images/IMG_8761.jpeg',v:[['90 ml','$789']]},
+{cat:'women',name:'212 VIP',img:'assets/assets/images/IMG_8760.jpeg',v:[['125 ml','$1799']]},
+{cat:'women',name:'Coco Mademoiselle',img:'assets/assets/images/IMG_8759.jpeg',v:[['100 ml','$2159']]},
+{cat:'women',name:'Angel Mugler',img:'assets/assets/images/IMG_8758.jpeg',v:[['100 ml','$1339']]},
+{cat:'women',name:'Eros Pour Femme',img:'assets/assets/images/IMG_8757.jpeg',v:[['100 ml','$1189']]},
+{cat:'women',name:'Idôle Lancôme',img:'assets/assets/images/IMG_8756.jpeg',v:[['100 ml','$3600']]},
+{cat:'women',name:'Bright Crystal',img:'assets/assets/images/IMG_8755.jpeg',v:[['90 ml','$1289'],['200 ml','$2559']]},
+{cat:'women',name:'The Only One D&G',img:'assets/assets/images/IMG_8754.jpeg',v:[['100 ml','$1289']]},
+{cat:'women',name:'Lonkoom Fiery Charm',img:'assets/assets/images/IMG_8753.jpeg',v:[['EDP','$479']]},
+{cat:'women',name:'Lattafa Yara',img:'assets/assets/images/IMG_8752.jpeg',v:[['100 ml','$499']]},
+{cat:'women',name:'Lonkoom 24k Golden',img:'assets/assets/images/IMG_8751.jpeg',v:[['100 ml','$479']]}
+];
+
+const container=document.getElementById('products');
+
+function render(list){
+container.innerHTML='';
+list.forEach(p=>{
+let opts=p.v.map(x=>`<option>${x[0]} - ${x[1]}</option>`).join('');
+container.innerHTML+=`
+<div class="card" data-cat="${p.cat}">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<select>${opts}</select>
+<div class="price">${p.v[0][1]}</div>
+<button>Agregar al carrito</button>
+</div>`;
+});
+}
+function filter(cat){
+render(cat==='all'?perfumes:perfumes.filter(p=>p.cat===cat));
+}
+render(perfumes);
+</script>
+
+</body>
+</html>
