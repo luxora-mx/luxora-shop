@@ -1,254 +1,279 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Luxora Shop</title>
+<meta charset="UTF-8">
+<title>Luxora Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://js.stripe.com/v3/"></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f6f6f6;
-      color: #111;
-    }
+<style>
+:root{
+  --gold:#c9a24d;
+  --dark:#0f0f0f;
+  --card:#1c1c1c;
+  --text:#ffffff;
+  --muted:#b3b3b3;
+}
 
-    /* HEADER */
-    header {
-      background: #fff;
-      padding: 15px 25px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+*{box-sizing:border-box;font-family:Segoe UI,sans-serif}
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+body{
+  margin:0;
+  background:linear-gradient(135deg,#0b0b0b,#1b1b1b);
+  color:var(--text);
+}
 
-    .logo img {
-      height: 45px;
-    }
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+  border-bottom:1px solid #2a2a2a;
+}
 
-    .search {
-      flex: 1;
-      margin: 0 30px;
-    }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
 
-    .search input {
-      width: 100%;
-      padding: 10px 15px;
-      border-radius: 25px;
-      border: 1px solid #ddd;
-      outline: none;
-    }
+.brand img{height:42px}
+.brand h1{font-size:22px;letter-spacing:1px}
 
-    .icons {
-      display: flex;
-      gap: 18px;
-      font-size: 20px;
-      cursor: pointer;
-    }
+.header-actions{
+  display:flex;
+  gap:28px;
+  color:var(--muted);
+  font-size:14px;
+}
 
-    /* INFO BAR */
-    .info-bar {
-      background: linear-gradient(135deg,#111,#333);
-      color: #fff;
-      text-align: center;
-      padding: 12px;
-      font-size: 14px;
-    }
+.banner{
+  max-width:880px;
+  margin:35px auto;
+  padding:28px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#c9a24d,#e6c77a);
+  color:#111;
+  text-align:center;
+}
 
-    /* PERFUME IDEAL */
-    .ideal {
-      max-width: 1200px;
-      margin: 30px auto;
-      background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-      border-radius: 16px;
-      padding: 40px 20px;
-      color: #fff;
-      text-align: center;
-    }
+.banner h2{margin:0 0 12px;font-size:24px}
 
-    .ideal h2 {
-      margin-bottom: 10px;
-    }
+.banner button{
+  background:#111;
+  color:white;
+  border:none;
+  padding:12px 28px;
+  border-radius:30px;
+  cursor:pointer;
+}
 
-    .ideal button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 25px;
-      background: #fff;
-      color: #000;
-      cursor: pointer;
-      font-weight: 600;
-    }
+.filters{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin:30px 0;
+}
 
-    /* SECTIONS */
-    section {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+.filters button{
+  border:1px solid var(--gold);
+  background:none;
+  color:var(--gold);
+  padding:8px 20px;
+  border-radius:25px;
+  cursor:pointer;
+}
 
-    h3 {
-      margin-bottom: 20px;
-    }
+.section-title{
+  margin:40px;
+  font-size:22px;
+  color:var(--gold);
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 25px;
-    }
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:28px;
+  padding:0 40px 60px;
+}
 
-    .card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.08);
-      text-align: center;
-    }
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+}
 
-    .card img {
-      width: 100%;
-      height: 260px;
-      object-fit: contain;
-    }
+.card img{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:14px;
+}
 
-    .card h4 {
-      font-size: 15px;
-      margin: 10px 0;
-    }
+.card h3{
+  font-size:15px;
+  margin-bottom:10px;
+}
 
-    .price {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+.card select{
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  margin-bottom:10px;
+}
 
-    .card button {
-      padding: 10px;
-      width: 100%;
-      border-radius: 25px;
-      border: none;
-      background: #111;
-      color: #fff;
-      cursor: pointer;
-    }
+.price{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:12px;
+}
 
-    footer {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 25px;
-      margin-top: 60px;
-      font-size: 14px;
-    }
-  </style>
+.card button{
+  background:var(--gold);
+  border:none;
+  color:#111;
+  width:100%;
+  padding:10px;
+  border-radius:25px;
+  cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">
+  <div class="brand">
     <img src="assets/assets/images/50862767-59F4-4B12-8424-D7320C27A5E3.png">
-    <strong>Luxora Shop</strong>
+    <h1>Luxora Shop</h1>
   </div>
-
-  <div class="search">
-    <input type="text" placeholder="Buscar perfume...">
-  </div>
-
-  <div class="icons">
-    🛒 👤
+  <div class="header-actions">
+    <span>Cuenta</span>
+    <span>Carrito</span>
   </div>
 </header>
 
-<div class="info-bar">
-  🚚 Envíos gratis a todo México · Entrega de 1 a 5 días hábiles
-</div>
-
-<div class="ideal">
-  <h2>¿No sabes qué perfume elegir?</h2>
-  <p>Encuentra tu perfume ideal según tu estilo y personalidad</p>
+<div class="banner">
+  <h2>¿No sabes qué perfume elegir? Encuentra tu perfume ideal</h2>
   <button>Descubrir mi perfume ideal</button>
 </div>
 
-<section>
-  <h3>Perfumes para Caballero</h3>
-  <div class="grid">
-    <div class="card">
-      <img src="assets/assets/images/IMG_8733.jpeg">
-      <h4>Dior Sauvage – Hombre</h4>
-      <div class="price">$2,499 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
+<div class="filters">
+  <button onclick="filterProducts('all')">Todos</button>
+  <button onclick="filterProducts('caballero')">Caballero</button>
+  <button onclick="filterProducts('dama')">Dama</button>
+</div>
 
-    <div class="card">
-      <img src="assets/assets/images/IMG_8734.jpeg">
-      <h4>Bleu de Chanel – Hombre</h4>
-      <div class="price">$2,699 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
+<h2 class="section-title">Catálogo de perfumes</h2>
+<div class="products" id="products"></div>
 
-    <div class="card">
-      <img src="assets/assets/images/IMG_8736.jpeg">
-      <h4>1 Million – Hombre</h4>
-      <div class="price">$2,199 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
+<script>
+const stripe = Stripe("pk_live_510ynvVFHlvSqX8MZ0Jgz7FzIB54204
+ZXNW6wHObIf4nsCfruda2tMUroggJbjMmB3K8U1
+triJUQWy9ERsipØCoHnØ0blquZucq");
 
-    <div class="card">
-      <img src="assets/assets/images/IMG_8769.jpeg">
-      <h4>Nautica Voyage – Hombre</h4>
-      <div class="price">$1,199 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
-  </div>
-</section>
+const products = [
+/* ================= CABALLERO ================= */
+{ name:"Dior Sauvage",gender:"caballero",img:"IMG_8733.jpeg",v:[{l:"100 ml",p:1500,id:"price_1SbDljFHlvSqX8MZWVQaLDmt"}]},
+{ name:"Bleu de Chanel",gender:"caballero",img:"IMG_8734.jpeg",v:[{l:"100 ml",p:1650,id:"price_1SbDoFFHlvSqX8MZ63fuyT7Y"}]},
+{ name:"Acqua di Gio Profumo",gender:"caballero",img:"IMG_8735.jpeg",v:[{l:"100 ml",p:600,id:"price_1SbDrHFHlvSqX8MZBxZY5Tah"}]},
+{ name:"1 Million",gender:"caballero",img:"IMG_8736.jpeg",v:[{l:"100 ml",p:1600,id:"price_1SbDrhFHlvSqX8MZOHIS2Bls"}]},
+{ name:"Invictus Parfum",gender:"caballero",img:"IMG_8737.jpeg",v:[{l:"200 ml",p:2860,id:"price_1SbDsGFHlvSqX8MZ0AmaJ9rU"}]},
+{ name:"Le Male Ultra Male",gender:"caballero",img:"IMG_8738.jpeg",v:[{l:"125 ml",p:900,id:"price_1SbDshFHlvSqX8MZRUZCMxpZ"}]},
+{ name:"Azzaro The Most Wanted",gender:"caballero",img:"IMG_8739.jpeg",v:[{l:"100 ml",p:1199,id:"price_1SbDtFFHlvSqX8MZBN48lTlz"}]},
+{ name:"Versace Eros",gender:"caballero",img:"IMG_8741.jpeg",v:[{l:"200 ml",p:659,id:"price_1SbDtiFHlvSqX8MZ84TQHbDR"}]},
+{ name:"Bad Boy Cobalt",gender:"caballero",img:"IMG_8742.jpeg",v:[{l:"100 ml",p:1559,id:"price_1SbDuTFHlvSqX8MZRYNnwqny"}]},
+{ name:"Boss Bottled Infinite",gender:"caballero",img:"IMG_8744.jpeg",v:[
+{l:"100 ml",p:1259,id:"price_1SbDurFHlvSqX8MZOjlttAvO"},
+{l:"200 ml",p:1359,id:"price_1SbRSeFHlvSqX8MZswDgpMsc"}]},
+{ name:"Y EDP",gender:"caballero",img:"IMG_8745.jpeg",v:[
+{l:"100 ml",p:859,id:"price_1SbRUtFHlvSqX8MZvtVHrN69"},
+{l:"200 ml",p:1600,id:"price_1SbRUtFHlvSqX8MZUsMMIoVO"}]},
+{ name:"Stronger With You",gender:"caballero",img:"IMG_8746.jpeg",v:[{l:"100 ml",p:2689,id:"price_1SbRVgFHlvSqX8MZRCDS4r3y"}]},
+{ name:"Montblanc Explorer",gender:"caballero",img:"IMG_8747.jpeg",v:[{l:"100 ml",p:1059,id:"price_1SbRWTFHlvSqX8MZk34cJUTG"}]},
+{ name:"Club de Nuit Intense Man",gender:"caballero",img:"IMG_8748.jpeg",v:[{l:"100 ml",p:1159,id:"price_1SbRX5FHlvSqX8MZ6AdrYtCX"}]},
+{ name:"Valentino Uomo Born in Roma",gender:"caballero",img:"IMG_8749.jpeg",v:[{l:"100 ml",p:599,id:"price_1SbRXdFHlvSqX8MZqCgjFKEl"}]},
+{ name:"Scandal Pour Homme",gender:"caballero",img:"IMG_8750.jpeg",v:[{l:"100 ml",p:1359,id:"price_1SbRYEFHlvSqX8MZze4fGeMp"}]},
+{ name:"CK One",gender:"caballero",img:"IMG_8770.jpeg",v:[
+{l:"100 ml",p:459,id:"price_1SbRYzFHlvSqX8MZOPs0hSjx"},
+{l:"200 ml",p:659,id:"price_1SbRYzFHlvSqX8MZim1WhE5S"}]},
+{ name:"Nautica Voyage",gender:"caballero",img:"IMG_8769.jpeg",v:[
+{l:"100 ml",p:359,id:"price_1SbRZoFHlvSqX8MZDpybAR8y"},
+{l:"200 ml",p:659,id:"price_1SbRZoFHlvSqX8MZWlTidTyo"}]},
 
-<section>
-  <h3>Perfumes para Dama</h3>
-  <div class="grid">
-    <div class="card">
-      <img src="assets/assets/images/IMG_8768.jpeg">
-      <h4>Good Girl – Mujer</h4>
-      <div class="price">$2,499 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
+/* ================= DAMA ================= */
+{ name:"Good Girl",gender:"dama",img:"IMG_8768.jpeg",v:[
+{l:"80 ml",p:619,id:"price_1SbsowFHlvSqX8MZW8e6QaIF"},
+{l:"150 ml",p:2659,id:"price_1SbsowFHlvSqX8MZfTUrs9YL"}]},
+{ name:"La Vie Est Belle",gender:"dama",img:"IMG_8767.jpeg",v:[
+{l:"30 ml",p:2059,id:"price_1SbsrfFHlvSqX8MZpKSDAH0s"},
+{l:"50 ml",p:2859,id:"price_1SbsrfFHlvSqX8MZVi8jG5zn"},
+{l:"100 ml",p:3859,id:"price_1SbsrfFHlvSqX8MZtAeNcVX1"},
+{l:"150 ml",p:4459,id:"price_1SbsrfFHlvSqX8MZgaiEwMCL"}]},
+{ name:"Miss Dior",gender:"dama",img:"IMG_8766.jpeg",v:[
+{l:"100 ml",p:1599,id:"price_1SbwQVFHlvSqX8MZgi4vzs8e"},
+{l:"150 ml",p:3619,id:"price_1SbwQVFHlvSqX8MZY78E5eLK"}]},
+{ name:"Black Opium",gender:"dama",img:"IMG_8765.jpeg",v:[{l:"90 ml",p:659,id:"price_1SbwRIFHlvSqX8MZCydGIx3C"}]},
+{ name:"Light Blue",gender:"dama",img:"IMG_8764.jpeg",v:[{l:"125 ml",p:1399,id:"price_1SbwRnFHlvSqX8MZ1GGoViww"}]},
+{ name:"Cloud Ariana Grande",gender:"dama",img:"IMG_8763.jpeg",v:[{l:"100 ml",p:1189,id:"price_1SbwT9FHlvSqX8MZ3lPb0KMH"}]},
+{ name:"Sweet Like Candy",gender:"dama",img:"IMG_8762.jpeg",v:[{l:"100 ml",p:899,id:"price_1SbwTfFHlvSqX8MZFbkUxfeP"}]},
+{ name:"Libre YSL",gender:"dama",img:"IMG_8761.jpeg",v:[{l:"90 ml",p:789,id:"price_1SbwUDFHlvSqX8MZpkDS28kh"}]},
+{ name:"212 VIP",gender:"dama",img:"IMG_8760.jpeg",v:[{l:"125 ml",p:1799,id:"price_1SbwVtFHlvSqX8MZZkPoytKD"}]},
+{ name:"Coco Mademoiselle",gender:"dama",img:"IMG_8759.jpeg",v:[{l:"100 ml",p:2159,id:"price_1SbwWWFHlvSqX8MZYiDCNocH"}]},
+{ name:"Angel Mugler",gender:"dama",img:"IMG_8758.jpeg",v:[{l:"100 ml",p:1339,id:"price_1SbwX9FHlvSqX8MZzkP8ttcC"}]},
+{ name:"Eros Pour Femme",gender:"dama",img:"IMG_8757.jpeg",v:[{l:"100 ml",p:1189,id:"price_1SbwXyFHlvSqX8MZ8pdvSYao"}]},
+{ name:"Idôle Lancôme",gender:"dama",img:"IMG_8756.jpeg",v:[{l:"100 ml",p:3600,id:"price_1SbwYXFHlvSqX8MZjchoOLBj"}]},
+{ name:"Bright Crystal",gender:"dama",img:"IMG_8755.jpeg",v:[
+{l:"90 ml",p:1289,id:"price_1SbwZcFHlvSqX8MZ6EALfWNO"},
+{l:"200 ml",p:2559,id:"price_1SbwZcFHlvSqX8MZCb0ewGbl"}]},
+{ name:"The Only One D&G",gender:"dama",img:"IMG_8754.jpeg",v:[{l:"100 ml",p:1289,id:"price_1SbwaAFHlvSqX8MZvNfn5wR2"}]},
+{ name:"Lonkoom Fiery Charm",gender:"dama",img:"IMG_8753.jpeg",v:[{l:"100 ml",p:479,id:"price_1SbwaiFHlvSqX8MZvWlE76Gf"}]},
+{ name:"Lattafa Yara",gender:"dama",img:"IMG_8752.jpeg",v:[{l:"100 ml",p:499,id:"price_1SbwbBFHlvSqX8MZZlP45HMl"}]},
+{ name:"Lonkoom 24k Golden",gender:"dama",img:"IMG_8751.jpeg",v:[{l:"100 ml",p:479,id:"price_1SbwblFHlvSqX8MZiZ0knChO"}]}
+];
 
-    <div class="card">
-      <img src="assets/assets/images/IMG_8767.jpeg">
-      <h4>La Vie Est Belle – Mujer</h4>
-      <div class="price">$2,699 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
+const container=document.getElementById("products");
 
-    <div class="card">
-      <img src="assets/assets/images/IMG_8765.jpeg">
-      <h4>Black Opium – Mujer</h4>
-      <div class="price">$2,399 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
+function render(){
+ container.innerHTML="";
+ products.forEach(p=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.dataset.gender=p.gender;
+  card.innerHTML=`
+   <img src="assets/assets/images/${p.img}">
+   <h3>${p.name}</h3>
+   <select onchange="updatePrice(this)">
+    ${p.v.map(x=>`<option data-price="${x.p}" data-id="${x.id}">${x.l}</option>`).join("")}
+   </select>
+   <div class="price">$${p.v[0].p} MXN</div>
+   <button onclick="buy(this)">Comprar ahora</button>`;
+  container.appendChild(card);
+ });
+}
 
-    <div class="card">
-      <img src="assets/assets/images/IMG_8763.jpeg">
-      <h4>Cloud – Ariana Grande</h4>
-      <div class="price">$1,899 MXN</div>
-      <button>Comprar ahora</button>
-    </div>
-  </div>
-</section>
+function updatePrice(sel){
+ sel.nextElementSibling.innerText="$"+sel.selectedOptions[0].dataset.price+" MXN";
+}
 
-<footer>
-  © 2025 Luxora Shop · Contacto: Contactoluxurashop@gmail.com
-</footer>
+function buy(btn){
+ const sel=btn.previousElementSibling.previousElementSibling;
+ stripe.redirectToCheckout({
+  lineItems:[{price:sel.selectedOptions[0].dataset.id,quantity:1}],
+  mode:"payment",
+  successUrl:location.href,
+  cancelUrl:location.href
+ });
+}
+
+function filterProducts(type){
+ document.querySelectorAll(".card").forEach(c=>{
+  c.style.display=(type==="all"||c.dataset.gender===type)?"block":"none";
+ });
+}
+
+render();
+</script>
 
 </body>
 </html>
